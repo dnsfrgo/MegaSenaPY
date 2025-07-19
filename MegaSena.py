@@ -7,7 +7,7 @@ from collections import Counter
 
 # --- App Title and Header ---
 st.set_page_config(page_title="🔮 Mega-Sena Predictions", page_icon="🇧🇷")
-st.title("🤑 Brazil - Mega-Sena Predictor")
+st.title("🤑 Brazil - Mega-Sena Predictor [Para Gui]")
 st.write("Este aplicativo analisa a frequência histórica dos resultados da Mega-Sena para gerar 3 linhas de jogo.\n\n\n"
         "Como a análise é baseada em dados, os números gerados não são aleatórios e serão sempre os mesmos.\n\n"
          "**Linha 1 (Mais Frequentes):** Os 6 números mais sorteados na história.\n\n"
