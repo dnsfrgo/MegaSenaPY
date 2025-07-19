@@ -14,6 +14,16 @@ st.write("Este aplicativo analisa a frequência histórica dos resultados da Meg
         "**Linha 2 (Nível 2):** Os próximos 6 números da lista de mais sorteados (do 7º ao 12º).\n\n"
         "**Linha 3 (Nível 3):** O terceiro conjunto de 6 números mais sorteados (do 13º ao 18º).\n\n")
 
+
+# --- Botão de atualização em Português ---
+if st.button("Verificar Atualizações e Atualizar Dados 🔄"):
+    # Limpa todas as funções em cache
+    st.cache_data.clear()
+    # Mensagem de sucesso em Português
+    st.success("Cache de dados limpo! Atualizando os números...")
+    # Roda o app desde o início
+    st.rerun()
+
 # --- Data Loading Function ---
 @st.cache_data(ttl="1d")
 def load_data():
