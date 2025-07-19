@@ -36,21 +36,21 @@ def display_results(df, main_cols):
         main_freq = Counter(all_main_numbers)
         top_18_main_numbers = [item[0] for item in main_freq.most_common(18)]
 
-        st.header("Predicted Lines (Based on Historical Frequency)")
+        st.header("Linhas Previstas (Com Base na Frequência Histórica)")
 
         # Tier 1
         line1_main = sorted(top_18_main_numbers[0:6])
-        st.subheader("Line 1 (Top Tier):")
+        st.subheader("Linha 1 (Mais Frequentes):")
         st.markdown(f"**{', '.join(str(int(x)) for x in line1_main)}**")
 
         # Tier 2
         line2_main = sorted(top_18_main_numbers[6:12])
-        st.subheader("Line 2 (2nd Tier):")
+        st.subheader("Linha 2 (Nível 2):")
         st.markdown(f"**{', '.join(str(int(x)) for x in line2_main)}**")
 
         # Tier 3
         line3_main = sorted(top_18_main_numbers[12:18])
-        st.subheader("Line 3 (3rd Tier):")
+        st.subheader("Linha 3 (Nível 3):")
         st.markdown(f"**{', '.join(str(int(x)) for x in line3_main)}**")
 
     except Exception as e:
