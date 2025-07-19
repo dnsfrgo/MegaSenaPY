@@ -16,7 +16,7 @@ st.write("Este aplicativo analisa a frequência histórica dos resultados da Meg
 
 
 # --- Botão de atualização em Português ---
-if st.button("Verificar Atualizações e Atualizar Dados 🔄"):
+if st.button("Verificar Atualizações e Atualizar Dados 🔄 "):
     # Limpa todas as funções em cache
     st.cache_data.clear()
     # Mensagem de sucesso em Português
