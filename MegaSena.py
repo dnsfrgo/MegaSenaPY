@@ -27,14 +27,12 @@ if st.button("Verificar Atualizações e Atualizar Dados 🔄 "):
 # --- Data Loading Function ---
 @st.cache_data(ttl="1d")
 def load_data():
-    """Loads the Brazil Mega-Sena dataset from Kaggle."""
-    dataset_path = "danttis/brazil-lottery-mega-sena"
+    url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR61gQrKotrJhGDVRCafMj0K15Pvv7TLaayeTIuQan7YE2EAFPBMlUk9zZdR444IUqNUhXRh46hlNVb/pub?gid=1514261907&single=true&output=csv"
     try:
-        path = kagglehub.dataset_download(dataset_path)
-        csv_path = next((os.path.join(path, f) for f in os.listdir(path) if f.endswith(".csv")), None)
-        return pd.read_csv(csv_path) if csv_path else None
+        df = pd.read_csv(url)
+        return df
     except Exception as e:
-        st.error(f"Failed to download data from Kaggle. Error: {e}")
+        st.error(f"Failed to load Google Sheet. Error: {e}")
         return None
 
 
