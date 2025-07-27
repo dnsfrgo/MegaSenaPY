@@ -36,6 +36,7 @@ def load_data():
         return None
 
 
+
 # --- Function to Display Results (simplified for no bonus ball) ---
 def display_results(df, main_cols):
     """Processes and displays the top 3 tiered lines."""
@@ -77,8 +78,19 @@ except (KeyError, FileNotFoundError):
 # Load the data and display the results
 df = load_data()
 if df is not None:
-    # Column names based on your screenshot for Mega-Sena
+    # Clean column names just in case
+    df.columns = df.columns.str.strip()
+
     main_cols = ['Ball1', 'Ball2', 'Ball3', 'Ball4', 'Ball5', 'Ball6']
+
+    # Get the most recent date from the Date column
+    most_recent_date = df['Date'].max()
+    formatted_date = pd.to_datetime(most_recent_date).strftime("%d/%m/%Y")
+
+    # Display it in the app with a Portuguese descriptor
+    st.info(f"📅 Data do jogo mais recente: **{formatted_date}**")
+
+    # Then show your predicted lines
     display_results(df, main_cols)
 else:
     st.warning("Could not load data to display results.")
