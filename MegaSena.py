@@ -3,6 +3,8 @@ import streamlit as st
 import pandas as pd
 import os
 from collections import Counter
+import altair as alt
+
 
 # --- App Title and Header ---
 st.set_page_config(page_title="🔮 Mega-Sena Predictions", page_icon="🇧🇷")
@@ -38,25 +40,58 @@ def load_data():
 
 # --- Function to Display Results (simplified for no bonus ball) ---
 def display_results(df, main_cols):
-    """Processes and displays the top 3 tiered lines."""
     try:
         all_main_numbers = df[main_cols].values.flatten()
         main_freq = Counter(all_main_numbers)
-        top_18_main_numbers = [item[0] for item in main_freq.most_common(18)]
 
+        # Prepare frequency DataFrame for chart (numbers 1-60)
+        numbers = list(range(1, 61))
+        freq_data = {num: main_freq.get(num, 0) for num in numbers}
+        freq_df = pd.DataFrame({
+            'Número': numbers,
+            'Frequência': [freq_data[num] for num in numbers]
+        })
+
+        # Top 18 numbers to highlight
+        top18 = [num for num, _ in main_freq.most_common(18)]
+
+        # Altair bar chart
+        chart = alt.Chart(freq_df).mark_bar(cornerRadiusTopLeft=3, cornerRadiusTopRight=3).encode(
+            x=alt.X('Número:O', title='Número', axis=alt.Axis(labelAngle=0)),
+            y=alt.Y('Frequência:Q', title='Frequência'),
+            color=alt.condition(
+                alt.FieldOneOfPredicate(field='Número', oneOf=top18),
+                alt.value('#FF7F0E'),  # Orange highlight
+                alt.value('#1F77B4')   # Steelblue default
+            ),
+            tooltip=[
+                alt.Tooltip('Número:O', title='Número'),
+                alt.Tooltip('Frequência:Q', title='Frequência')
+            ]
+        ).properties(
+            width=700,
+            height=350,
+            title='📊 Frequência dos Números da Mega-Sena (Top 18 destacados)'
+        )
+
+        st.altair_chart(chart, use_container_width=True)
+
+        # Show predicted lines below the chart
         st.header("Linhas Previstas (Com Base na Frequência Histórica)")
 
-        # Tier 1
+        top_18_main_numbers = top18
+
+        # Linha 1
         line1_main = sorted(top_18_main_numbers[0:6])
         st.subheader("Linha 1 (Mais Frequentes):")
         st.markdown(f"**{', '.join(str(int(x)) for x in line1_main)}**")
 
-        # Tier 2
+        # Linha 2
         line2_main = sorted(top_18_main_numbers[6:12])
         st.subheader("Linha 2 (Nível 2):")
         st.markdown(f"**{', '.join(str(int(x)) for x in line2_main)}**")
 
-        # Tier 3
+        # Linha 3
         line3_main = sorted(top_18_main_numbers[12:18])
         st.subheader("Linha 3 (Nível 3):")
         st.markdown(f"**{', '.join(str(int(x)) for x in line3_main)}**")
