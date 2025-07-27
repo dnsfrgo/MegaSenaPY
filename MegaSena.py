@@ -73,9 +73,16 @@ if df is not None:
 
     main_cols = ['Ball1', 'Ball2', 'Ball3', 'Ball4', 'Ball5', 'Ball6']
 
-    # Get the most recent date from the Date column
+    # Convert Date column to datetime using the right dayfirst format
+    df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce')
+
     most_recent_date = df['Date'].max()
-    formatted_date = pd.to_datetime(most_recent_date).strftime("%d/%m/%Y")
+
+    if pd.isna(most_recent_date):
+        st.warning("Não foi possível identificar a data mais recente.")
+    else:
+        formatted_date = most_recent_date.strftime("%d/%m/%Y")
+        st.info(f"📅 Data do jogo mais recente: **{formatted_date}**")
 
     # Display it in the app with a Portuguese descriptor
     st.info(f"📅 Data do jogo mais recente: **{formatted_date}**")
