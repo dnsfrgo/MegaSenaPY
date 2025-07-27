@@ -1,6 +1,5 @@
 # mega_sena_app.py
 import streamlit as st
-import kagglehub
 import pandas as pd
 import os
 from collections import Counter
@@ -65,15 +64,6 @@ def display_results(df, main_cols):
     except Exception as e:
         st.error(f"Could not process the data. Please check the column names. Error: {e}")
 
-
-# --- Main App Logic ---
-# Set credentials from Streamlit Secrets
-try:
-    os.environ['KAGGLE_USERNAME'] = st.secrets["KAGGLE_USERNAME"]
-    os.environ['KAGGLE_KEY'] = st.secrets["KAGGLE_KEY"]
-except (KeyError, FileNotFoundError):
-    st.error("Kaggle credentials not found in Streamlit Secrets. Please add them to your app's settings.")
-    st.stop()
 
 # Load the data and display the results
 df = load_data()
