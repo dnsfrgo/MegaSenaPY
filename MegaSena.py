@@ -84,9 +84,6 @@ if df is not None:
         formatted_date = most_recent_date.strftime("%d/%m/%Y")
         st.info(f"📅 Data do jogo mais recente: **{formatted_date}**")
 
-    # Display it in the app with a Portuguese descriptor
-    st.info(f"📅 Data do jogo mais recente: **{formatted_date}**")
-
     # Then show your predicted lines
     display_results(df, main_cols)
 else:
